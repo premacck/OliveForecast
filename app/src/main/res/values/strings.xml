@@ -14,9 +14,15 @@
     <string name="weather_icon">Weather icon</string>
     <string name="something_went_wrong">Something went wrong, please try again</string>
     <string name="see_weather_at_your_current_location">See weather at your current location</string>
-    <string name="turn_on_location">Turn on location</string>
     <string name="in_order_to_see_weather">
-        In order to see weather at your current location, you need to turn on your location services first.
+        In order to see weather at your current location, you need to allow us to access your location services first.
+        \nOr choose a location from the top search bar.
+    </string>
+    <string name="enable_location_services">Allow location access</string>
+    <string name="turn_on_location">Turn on location</string>
+    <string name="turn_on_location_message">
+        In order for us to find your current location, please enable the location services.
+        \nOr choose a location from the top search bar.
     </string>
     <string name="location_services_required">Location services are required to get weather at your current location.</string>
     <string name="could_not_find_city">Could not find your city, please try searching for it</string>
@@ -32,6 +38,8 @@
     <string name="condition">Condition :&#160;</string>
     <string name="metric">Metric</string>
     <string name="imperial">Imperial</string>
+    <string name="enable">Enable</string>
+    <string name="close">Close</string>
 
     <string-array name="forecast_limit">
         <item>1</item>

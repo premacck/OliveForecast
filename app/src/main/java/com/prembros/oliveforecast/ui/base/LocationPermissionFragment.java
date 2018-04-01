@@ -1,8 +1,7 @@
 package com.prembros.oliveforecast.ui.base;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,6 +18,7 @@ import butterknife.Unbinder;
 public class LocationPermissionFragment extends Fragment {
 
     private Unbinder unbinder;
+    private PermissionAccessListener listener;
 
     public LocationPermissionFragment() {}
 
@@ -33,12 +33,22 @@ public class LocationPermissionFragment extends Fragment {
     }
 
     @OnClick(R.id.turn_on_location_btn) public void turnOnLocationManually() {
-        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+        listener.requestPermissionAccess();
     }
 
     @Override public void onDestroyView() {
         super.onDestroyView();
         if (unbinder != null)
             unbinder.unbind();
+    }
+
+    @Override public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof PermissionAccessListener)
+            listener = (PermissionAccessListener) context;
+    }
+
+    public interface PermissionAccessListener {
+        void requestPermissionAccess();
     }
 }

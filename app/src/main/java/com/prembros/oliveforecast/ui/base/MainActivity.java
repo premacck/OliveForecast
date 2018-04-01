@@ -3,13 +3,17 @@ package com.prembros.oliveforecast.ui.base;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -17,6 +21,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,6 +45,7 @@ import com.google.android.gms.tasks.Task;
 import com.prembros.oliveforecast.R;
 import com.prembros.oliveforecast.base.BaseActivity;
 import com.prembros.oliveforecast.base.FragmentNavigation;
+import com.prembros.oliveforecast.ui.base.LocationPermissionFragment.PermissionAccessListener;
 import com.prembros.oliveforecast.ui.forecast.MultipleDayForecastFragment;
 import com.prembros.oliveforecast.ui.forecast.TodayForecastFragment;
 import com.prembros.oliveforecast.ui.forecast.TomorrowForecastFragment;
@@ -54,15 +60,21 @@ import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.OnEditorAction;
+import butterknife.OnLongClick;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import static android.Manifest.permission.INTERNET;
+import static android.location.LocationManager.GPS_PROVIDER;
+import static android.location.LocationManager.NETWORK_PROVIDER;
 import static com.prembros.oliveforecast.utility.SharedPrefs.getForecastLimit;
+import static com.prembros.oliveforecast.utility.SharedPrefs.getLastSavedLocation;
+import static com.prembros.oliveforecast.utility.SharedPrefs.saveLastLocation;
 import static com.prembros.oliveforecast.utility.ViewUtils.hideKeyboard;
 
-public class MainActivity extends BaseActivity implements FragmentNavigation, OnPlaceSelectedListener {
+public class MainActivity extends BaseActivity implements FragmentNavigation, OnPlaceSelectedListener, PermissionAccessListener {
 
     private static final String REQUESTING_LOCATION_UPDATES_KEY = "locationUpdates";
     private static final String KEY_LOCATION = "location";
@@ -73,6 +85,7 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.container) ViewPager viewPager;
     @BindView(R.id.search_bar) PlacesAutocompleteTextView searchBar;
+    @BindView(R.id.current_location_weather) FloatingActionButton currentLocationWeather;
 
     private boolean isRequestingLocationUpdates;
     public Location currentLocation;
@@ -81,6 +94,7 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
     private FusedLocationProviderClient fusedLocationProviderClient;
     private FragmentManager fragmentManager;
     private SectionsPagerAdapter sectionsPagerAdapter;
+    private AlertDialog dialog;
 
     @Contract(value = " -> !null", pure = true) private MainActivity getThis() {
         return this;
@@ -113,8 +127,6 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
         isRequestingLocationUpdates = false;
         updateValuesFromBundle(savedInstanceState);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getThis());
-        if (arePermissionsAllowed(getThis())) getLastLocation();
-        else requestPermissions();
 
         searchBar.setOnPlaceSelectedListener(this);
     }
@@ -122,11 +134,14 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
     @Override protected void onResume() {
         super.onResume();
         calibrateThirdTab();
+        if (arePermissionsAllowed(getThis())) getLastLocation();
+        else requestPermissions();
     }
 
     @Override public void onPlaceSelected(@NonNull Place place) {
         hideKeyboard(getThis(), searchBar);
-        sectionsPagerAdapter.updateCity(place.terms.get(0).value);
+        saveLastLocation(getThis(), place.terms.get(0).value);
+        prepareTabs(place.terms.get(0).value);
         searchBar.setText(place.terms.get(0).value);
     }
 
@@ -135,14 +150,25 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
         return true;
     }
 
+    @OnClick(R.id.current_location_weather) public void showWeatherAtCurrentLocation() {
+        searchBar.setText(null);
+        updateCurrentCity();
+    }
+
+    @OnLongClick(R.id.current_location_weather) public boolean showWeatherAtCurrentLocationHint() {
+        Toast.makeText(getThis(), R.string.see_weather_at_your_current_location, Toast.LENGTH_SHORT).show();
+        return true;
+    }
+
     private void prepareTabs(String cityName) {
+        searchBar.clearFocus();
         if (sectionsPagerAdapter == null) {
             sectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), cityName);
             viewPager.setAdapter(sectionsPagerAdapter);
 
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-        }
+        } else sectionsPagerAdapter.updateCity(cityName);
     }
 
     private void calibrateThirdTab() {
@@ -160,38 +186,89 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
         try {
             List<Address> addresses = geocoder.getFromLocation(
                     currentLocation.getLatitude(), currentLocation.getLongitude(), 1);
-            prepareTabs(addresses.get(0).getLocality());
+            String cityName = addresses.get(0).getLocality();
+            saveLastLocation(getThis(), cityName);
+            prepareTabs(cityName);
         } catch (Exception e) {
             e.printStackTrace();
-            prepareTabs(null);
+            getLastLocation();
         }
     }
 
     private void getLastLocation() {
-        if (arePermissionsAllowed(getThis())) {
-            if (ActivityCompat.checkSelfPermission(getThis(),
-                    Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                    && ActivityCompat.checkSelfPermission(
-                    this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            fusedLocationProviderClient.getLastLocation()
-                    .addOnSuccessListener(getThis(), new OnSuccessListener<Location>() {
-                        @Override
-                        public void onSuccess(Location location) {
-                            if (location != null) {
-                                currentLocation = location;
-                                updateCurrentCity();
+        Fragment fragment = fragmentManager.findFragmentByTag(LocationPermissionFragment.class.getSimpleName());
+        if (fragment != null) fragmentManager.beginTransaction().remove(fragment).commit();
+        if (areLocationServicesEnabled()) {
+            if (arePermissionsAllowed(getThis())) {
+                if (ActivityCompat.checkSelfPermission(getThis(),
+                        Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(
+                        this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    return;
+                }
+                fusedLocationProviderClient.getLastLocation()
+                        .addOnSuccessListener(getThis(), new OnSuccessListener<Location>() {
+                            @Override
+                            public void onSuccess(Location location) {
+                                if (location != null) {
+                                    currentLocation = location;
+                                    updateCurrentCity();
+                                }
+                                else createLocationCallback();
                             }
+                        })
+                        .addOnFailureListener(getThis(), new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                createLocationCallback();
+                            }
+                        });
+            } else requestPermissions();
+        }
+        else {
+            showDialogToEnableLocationServices();
+            String lastSavedLocation = getLastSavedLocation(getThis());
+            if (lastSavedLocation != null && !lastSavedLocation.contains("null") && !lastSavedLocation.isEmpty()) {
+                prepareTabs(lastSavedLocation);
+            }
+        }
+    }
+
+    private boolean areLocationServicesEnabled() {
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            return locationManager != null &&
+                    locationManager.isProviderEnabled(GPS_PROVIDER) &&
+                    locationManager.isProviderEnabled(NETWORK_PROVIDER);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private void showDialogToEnableLocationServices() {
+        if (dialog == null) {
+            dialog = new AlertDialog.Builder(getThis())
+                    .setTitle(R.string.turn_on_location)
+                    .setMessage(R.string.turn_on_location_message)
+                    .setCancelable(false)
+                    .setPositiveButton(R.string.enable, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                            dialog.dismiss();
                         }
                     })
-                    .addOnFailureListener(getThis(), new OnFailureListener() {
+                    .setNegativeButton(R.string.close, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onFailure(@NonNull Exception e) {
-                            createLocationCallback();
+                        public void onClick(DialogInterface dialog, int which) {
+                            searchBar.requestFocus();
                         }
-                    });
-        } else requestPermissions();
+                    })
+                    .create();
+        }
+        if (dialog.isShowing()) dialog.dismiss();
+        dialog.show();
     }
 
     private void createLocationCallback() {
@@ -338,13 +415,16 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
                 internetResult == PackageManager.PERMISSION_GRANTED;
     }
 
+    @Override public void requestPermissionAccess() {
+        requestPermissions();
+    }
+
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 getThis(), new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, INTERNET}, REQUEST_LOCATION_PERMISSIONS);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case REQUEST_LOCATION_PERMISSIONS:
@@ -361,10 +441,10 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
                         showEmptyFragment();
                     }
                 }
-//                else {
-////                        permissions are denied, show empty fragment
-//                    showEmptyFragment();
-//                }
+                else {
+//                        permissions are denied, show empty fragment
+                    showEmptyFragment();
+                }
                 break;
             default:
                 break;
