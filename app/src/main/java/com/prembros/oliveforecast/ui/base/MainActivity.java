@@ -411,4 +411,12 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
             notifyDataSetChanged();
         }
     }
+
+    @Override public void onBackPressed() {
+        if (tabLayout.getSelectedTabPosition() != 0) {
+            TabLayout.Tab tab = tabLayout.getTabAt(0);
+            if (tab != null) tab.select();
+        }
+        else super.onBackPressed();
+    }
 }

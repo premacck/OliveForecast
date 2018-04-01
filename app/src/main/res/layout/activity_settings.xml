@@ -11,13 +11,13 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/action_bar_size"
         android:orientation="horizontal"
-        android:background="@drawable/bg_white_with_bottom_shadow">
+        android:background="@drawable/bg_primary_with_bottom_shadow">
 
         <ImageView
             android:id="@+id/up_btn"
             android:layout_width="@dimen/action_bar_size"
             android:layout_height="@dimen/action_bar_size"
-            android:src="@drawable/ic_arrow_back_dark"
+            android:src="@drawable/ic_arrow_back"
             android:scaleType="center"
             android:contentDescription="@string/back_button" />
 
@@ -30,7 +30,7 @@
             android:paddingEnd="@dimen/default_padding"
             android:paddingRight="@dimen/default_padding"
             android:textSize="@dimen/text_20sp"
-            android:textColor="@color/colorPrimaryText"
+            android:textColor="@android:color/white"
             android:text="@string/settings"/>
 
     </LinearLayout>

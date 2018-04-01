@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OliveForecast</string>
+    <string name="app_name">Olivecast</string>
     <string name="tab_text_1">Today</string>
     <string name="tab_text_2">Tomorrow</string>
     <string name="tab_text_3">3 Days</string>
