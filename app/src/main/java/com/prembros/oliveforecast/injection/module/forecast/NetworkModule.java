@@ -11,7 +11,6 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.scalars.ScalarsConverterFactory;
@@ -39,15 +38,15 @@ public class NetworkModule {
         return new File(context.getCacheDir(), "ResponseCache");
     }
 
-    @Provides @ForecastScope
-    HttpLoggingInterceptor getLoggingInterceptor() {
-        return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-    }
+//    @Provides @ForecastScope
+//    HttpLoggingInterceptor getLoggingInterceptor() {
+//        return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+//    }
 
     @Provides @ForecastScope
-    OkHttpClient getOkHttpClientWithAuthToken(HttpLoggingInterceptor loggingInterceptor, Cache cache) {
+    OkHttpClient getOkHttpClientWithAuthToken(Cache cache) {
         return new OkHttpClient.Builder()
-                .addInterceptor(loggingInterceptor)
+//                .addInterceptor(loggingInterceptor)
                 .readTimeout(30, TimeUnit.SECONDS)
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .cache(cache)
