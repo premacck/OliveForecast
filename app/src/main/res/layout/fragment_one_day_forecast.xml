@@ -1,0 +1,88 @@
+<android.support.v4.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.prembros.oliveforecast.base.DynamicProgress
+                android:id="@+id/progress_bar"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerInParent="true"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/default_padding"
+                android:orientation="vertical"
+                android:animateLayoutChanges="true">
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_city_name"
+                    style="@style/AppTheme.CustomTextViewBig"/>
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_date"
+                    style="@style/AppTheme.CustomTextViewDefault"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:animateLayoutChanges="true">
+
+                    <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                        android:id="@+id/weather_temperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/big_padding"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/weather_icon"
+                        android:layout_toLeftOf="@+id/weather_icon"
+                        android:textSize="@dimen/text_huge" />
+
+                    <ImageView
+                        android:id="@+id/weather_icon"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:padding="@dimen/big_padding"
+                        android:scaleType="fitCenter"
+                        android:contentDescription="@string/weather_icon" />
+
+                </RelativeLayout>
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_wind_speed"
+                    style="@style/AppTheme.CustomTextViewDefault"/>
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_wind_degree"
+                    style="@style/AppTheme.CustomTextViewDefault"/>
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_humidity"
+                    style="@style/AppTheme.CustomTextViewDefault"/>
+
+                <com.prembros.oliveforecast.ui.customviews.CustomTextView
+                    android:id="@+id/weather_condition"
+                    style="@style/AppTheme.CustomTextViewDefault"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</android.support.v4.widget.SwipeRefreshLayout>

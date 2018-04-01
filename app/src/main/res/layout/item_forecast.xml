@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:layout_marginBottom="@dimen/default_padding"
+    android:background="@drawable/bg_white_with_bottom_shadow">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1.5"
+        android:orientation="vertical">
+
+        <com.prembros.oliveforecast.ui.customviews.CustomTextView
+            android:id="@+id/forecast_date"
+            style="@style/AppTheme.CustomTextViewListLarge"/>
+
+        <com.prembros.oliveforecast.ui.customviews.CustomTextView
+            android:id="@+id/forecast_condition"
+            style="@style/AppTheme.CustomTextViewListLarge"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/weather_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:scaleType="fitCenter"
+        android:contentDescription="@string/weather_icon" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="end|center_vertical"
+        android:orientation="vertical">
+
+        <com.prembros.oliveforecast.ui.customviews.CustomTextView
+            android:id="@+id/forecast_max"
+            android:layout_marginBottom="@dimen/mini_padding"
+            style="@style/AppTheme.CustomTextViewListDefault"/>
+
+        <com.prembros.oliveforecast.ui.customviews.CustomTextView
+            android:id="@+id/forecast_min"
+            style="@style/AppTheme.CustomTextViewListDefault"/>
+
+    </LinearLayout>
+
+</LinearLayout>
