@@ -68,17 +68,17 @@
         android:layout_alignBottom="@+id/temperature_unit_text">
 
         <com.prembros.oliveforecast.ui.customviews.CustomCheckedTextView
-            android:id="@+id/celsius"
+            android:id="@+id/metric"
             style="@style/AppTheme.CustomCheckedTextView"
             android:layout_weight="1"
-            android:text="@string/celsius"
+            android:text="@string/metric"
             android:background="@drawable/bg_btn_white_curved_left" />
 
         <com.prembros.oliveforecast.ui.customviews.CustomCheckedTextView
-            android:id="@+id/fahrenheit"
+            android:id="@+id/imperial"
             style="@style/AppTheme.CustomCheckedTextView"
             android:layout_weight="1"
-            android:text="@string/fahrenheit"
+            android:text="@string/imperial"
             android:background="@drawable/bg_btn_white_curved_right" />
 
     </LinearLayout>

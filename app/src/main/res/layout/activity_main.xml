@@ -30,6 +30,7 @@
                 android:id="@+id/search_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:drawableStart="@drawable/ic_search"
                 android:drawableLeft="@drawable/ic_search"
                 android:drawablePadding="8dp"
@@ -38,6 +39,10 @@
                 android:ellipsize="end"
                 android:imeOptions="actionDone"
                 android:hint="@string/search_your_city_here"
+                android:textColorHint="@color/material_grey200"
+                android:textColor="@android:color/white"
+                app:backgroundTint="@color/material_grey200"
+                android:theme="@style/AppTheme.SearchBar"
                 app:pacv_googleMapsApiKey="@string/google_api_key"
                 app:pacv_resultType="geocode" />
 

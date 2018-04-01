@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.prembros.oliveforecast.ui.customviews.ShimmerLinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
@@ -16,11 +17,13 @@
 
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_date"
-            style="@style/AppTheme.CustomTextViewListLarge"/>
+            android:minWidth="180dp"
+            style="@style/AppTheme.CustomTextViewList.CustomTextViewListLarge"/>
 
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_condition"
-            style="@style/AppTheme.CustomTextViewListLarge"/>
+            android:minWidth="100dp"
+            style="@style/AppTheme.CustomTextViewList.CustomTextViewListLarge"/>
 
     </LinearLayout>
 
@@ -28,9 +31,12 @@
         android:id="@+id/weather_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minWidth="20dp"
+        android:minHeight="50dp"
         android:layout_weight="0.2"
         android:scaleType="fitCenter"
-        android:padding="@dimen/half_padding"
+        android:padding="@dimen/mini_padding"
+        android:src="@drawable/image_view_shimmer"
         android:contentDescription="@string/weather_icon" />
 
     <LinearLayout
@@ -43,12 +49,14 @@
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_max"
             android:layout_marginBottom="@dimen/mini_padding"
-            style="@style/AppTheme.CustomTextViewListDefault"/>
+            android:minWidth="50dp"
+            style="@style/AppTheme.CustomTextViewList.CustomTextViewListDefault"/>
 
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_min"
-            style="@style/AppTheme.CustomTextViewListDefault"/>
+            android:minWidth="50dp"
+            style="@style/AppTheme.CustomTextViewList.CustomTextViewListDefault"/>
 
     </LinearLayout>
 
-</LinearLayout>
+</com.prembros.oliveforecast.ui.customviews.ShimmerLinearLayout>

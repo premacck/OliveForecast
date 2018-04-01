@@ -25,8 +25,8 @@ import static com.prembros.oliveforecast.utility.SharedPrefs.setUnitType;
 
 public class SettingsActivity extends BaseActivity {
 
-    @BindView(R.id.celsius) CustomCheckedTextView celsius;
-    @BindView(R.id.fahrenheit) CustomCheckedTextView fahrenheit;
+    @BindView(R.id.metric) CustomCheckedTextView metric;
+    @BindView(R.id.imperial) CustomCheckedTextView imperial;
     @BindView(R.id.forecast_limit_selector) Spinner forecastLimitSelector;
 
     private Unbinder unbinder;
@@ -48,12 +48,12 @@ public class SettingsActivity extends BaseActivity {
         setForecastLimit(getThis(), position + 1);
     }
 
-    @OnClick(R.id.celsius) public void celsiusToggled() {
-        toggleTempUnit(!celsius.isChecked() ? METRIC : IMPERIAL, true);
+    @OnClick(R.id.metric) public void metricToggled() {
+        toggleTempUnit(!metric.isChecked() ? METRIC : IMPERIAL, true);
     }
 
-    @OnClick(R.id.fahrenheit) public void fahrenheitToggled() {
-        toggleTempUnit(!fahrenheit.isChecked() ? IMPERIAL : METRIC, true);
+    @OnClick(R.id.imperial) public void imperialToggled() {
+        toggleTempUnit(!imperial.isChecked() ? IMPERIAL : METRIC, true);
     }
 
     @OnClick(R.id.up_btn) public void goBack() {
@@ -62,17 +62,17 @@ public class SettingsActivity extends BaseActivity {
 
     private void toggleTempUnit(@Unit int unitType, boolean isAction) {
         if (isAction) {
-            celsius.setChecked(!celsius.isChecked());
-            fahrenheit.setChecked(!fahrenheit.isChecked());
+            metric.setChecked(!metric.isChecked());
+            imperial.setChecked(!imperial.isChecked());
         }
         switch (unitType) {
             case Unit.METRIC:
-                celsius.setBackgroundResource(R.drawable.bg_btn_accent_curved_left);
-                fahrenheit.setBackgroundResource(R.drawable.bg_btn_white_curved_right);
+                metric.setBackgroundResource(R.drawable.bg_btn_accent_curved_left);
+                imperial.setBackgroundResource(R.drawable.bg_btn_white_curved_right);
                 break;
             case Unit.IMPERIAL:
-                celsius.setBackgroundResource(R.drawable.bg_btn_white_curved_left);
-                fahrenheit.setBackgroundResource(R.drawable.bg_btn_accent_curved_right);
+                metric.setBackgroundResource(R.drawable.bg_btn_white_curved_left);
+                imperial.setBackgroundResource(R.drawable.bg_btn_accent_curved_right);
                 break;
         }
         setUnitType(getThis(), unitType);

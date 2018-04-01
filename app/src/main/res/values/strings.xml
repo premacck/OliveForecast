@@ -30,6 +30,8 @@
     <string name="wind_degree">Wind degree :&#160;</string>
     <string name="humidity">Humidity :&#160;</string>
     <string name="condition">Condition :&#160;</string>
+    <string name="metric">Metric</string>
+    <string name="imperial">Imperial</string>
 
     <string-array name="forecast_limit">
         <item>1</item>

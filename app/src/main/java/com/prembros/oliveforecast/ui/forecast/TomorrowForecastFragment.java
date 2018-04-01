@@ -14,15 +14,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.prembros.oliveforecast.R;
 import com.prembros.oliveforecast.base.BaseFragment;
-import com.prembros.oliveforecast.base.DynamicProgress;
 import com.prembros.oliveforecast.data.model.WeatherForecast;
 import com.prembros.oliveforecast.ui.customviews.CustomTextView;
+import com.prembros.oliveforecast.ui.customviews.ShimmerLinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.view.View.GONE;
-import static android.view.View.VISIBLE;
 import static com.bumptech.glide.load.engine.DiskCacheStrategy.RESOURCE;
 import static com.prembros.oliveforecast.ui.forecast.TodayForecastFragment.CITY_NAME;
 import static com.prembros.oliveforecast.utility.Annotations.DayType.TOMORROW;
@@ -35,7 +33,7 @@ import static com.prembros.oliveforecast.utility.ViewUtils.getTomorrow;
 
 public class TomorrowForecastFragment extends BaseFragment {
 
-    @BindView(R.id.progress_bar) DynamicProgress progressBar;
+    @BindView(R.id.root_layout) ShimmerLinearLayout shimmerLinearLayout;
     @BindView(R.id.weather_city_name) CustomTextView weatherCityName;
     @BindView(R.id.weather_date) CustomTextView weatherDate;
     @BindView(R.id.weather_temperature) CustomTextView weatherTemperature;
@@ -83,7 +81,7 @@ public class TomorrowForecastFragment extends BaseFragment {
 
     private void getTomorrowForecast() {
         if (cityName != null) {
-            progressBar.setVisibility(VISIBLE);
+            shimmerize();
             getViewModel().getForecast(cityName, 2, TOMORROW);
         } else Toast.makeText(context, R.string.could_not_find_city, Toast.LENGTH_SHORT).show();
     }
@@ -94,7 +92,7 @@ public class TomorrowForecastFragment extends BaseFragment {
                 try {
                     Glide.with(this)
                             .load(HTTP + weatherForecast.getForecast().getForecastday().get(1).getDay().getCondition().getIcon())
-                            .apply(RequestOptions.diskCacheStrategyOf(RESOURCE))
+                            .apply(RequestOptions.diskCacheStrategyOf(RESOURCE).placeholder(R.drawable.image_view_shimmer))
                             .into(weatherIcon);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -129,7 +127,22 @@ public class TomorrowForecastFragment extends BaseFragment {
     }
 
     private void dismissLoaders() {
-        progressBar.setVisibility(GONE);
+        deShimmerize();
         if (swipeRefreshLayout.isRefreshing()) swipeRefreshLayout.setRefreshing(false);
+    }
+
+    private void shimmerize() {
+        shimmerLinearLayout.startShimmerAnimation();
+        weatherCityName.setText("");
+        weatherDate.setText("");
+        weatherTemperature.setText("");
+        weatherWindSpeed.setText("");
+        weatherWindDegree.setText("");
+        weatherHumidity.setText("");
+        weatherCondition.setText("");
+    }
+
+    private void deShimmerize() {
+        shimmerLinearLayout.stopShimmerAnimation();
     }
 }

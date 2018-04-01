@@ -72,6 +72,18 @@ public class ViewUtils {
                 String.valueOf(degreeInF) + DEGREE + FAHRENHEIT;
     }
 
+    @NonNull public static String getSuitableMaxTemp(Context context, double maxTempC, double maxTempF) {
+        return String.valueOf(getUnitType(context) == METRIC ?
+                String.valueOf(maxTempC) + DEGREE + CELSIUS :
+                String.valueOf(maxTempF) + DEGREE + FAHRENHEIT);
+    }
+
+    @NonNull public static String getSuitableMinTemp(Context context, double minTempC, double minTempF) {
+        return String.valueOf(getUnitType(context) == METRIC ?
+                String.valueOf(minTempC) + DEGREE + CELSIUS :
+                String.valueOf(minTempF) + DEGREE + FAHRENHEIT);
+    }
+
     @NonNull public static String getSuitableWindSpeed(Context context, double kphSpeed, double mphSpeed) {
         return getUnitType(context) == METRIC ? String.valueOf(kphSpeed) + KPH : String.valueOf(mphSpeed) + MPH;
     }
@@ -106,14 +118,6 @@ public class ViewUtils {
             e.printStackTrace();
             return null;
         }
-    }
-
-    @NonNull public static String getSuitableMaxTemp(Context context, double maxTempC, double maxTempF) {
-        return String.valueOf(getUnitType(context) == METRIC ? maxTempC : maxTempF);
-    }
-
-    @NonNull public static String getSuitableMinTemp(Context context, double minTempC, double minTempF) {
-        return String.valueOf(getUnitType(context) == METRIC ? minTempC : minTempF);
     }
 
     public static int getPixels(@NonNull Context context, int dp) {

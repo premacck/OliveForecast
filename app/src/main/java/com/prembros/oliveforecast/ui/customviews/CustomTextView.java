@@ -1,11 +1,14 @@
 package com.prembros.oliveforecast.ui.customviews;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.view.View;
+
+import static android.graphics.Color.TRANSPARENT;
 
 public class CustomTextView extends AppCompatTextView {
 
@@ -21,7 +24,7 @@ public class CustomTextView extends AppCompatTextView {
         super(context, attrs, defStyleAttr);
     }
 
-    public void setText(String text, long delay) {
+/*    public void setText(String text, long delay) {
         try {
             if (text != null && !text.contains("null")) {
                 setVisibility(INVISIBLE);
@@ -33,13 +36,17 @@ public class CustomTextView extends AppCompatTextView {
             e.printStackTrace();
             setVisibility(GONE);
         }
-    }
+    }*/
 
     public void setText(String text) {
         try {
-            if (text != null && !text.contains("null")) {
+            if (text != null && !text.contains("null") && !text.isEmpty()) {
+                setBackgroundColor(TRANSPARENT);
                 super.setText(text);
                 setVisibility(VISIBLE);
+            }
+            else if (text != null && text.isEmpty()) {
+                setBackgroundColor(Color.parseColor("#E0E0E0"));
             }
             else setVisibility(GONE);
         } catch (Exception e) {

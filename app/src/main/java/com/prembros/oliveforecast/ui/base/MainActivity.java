@@ -127,6 +127,7 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
     @Override public void onPlaceSelected(@NonNull Place place) {
         hideKeyboard(getThis(), searchBar);
         sectionsPagerAdapter.updateCity(place.terms.get(0).value);
+        searchBar.setText(place.terms.get(0).value);
     }
 
     @OnEditorAction(R.id.search_bar) public boolean locationNotSelected() {
@@ -141,8 +142,6 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
 
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
-
-            calibrateThirdTab();
         }
     }
 
@@ -150,7 +149,7 @@ public class MainActivity extends BaseActivity implements FragmentNavigation, On
         try {
             TabLayout.Tab tab = tabLayout.getTabAt(2);
             int forecastLimit = getForecastLimit(getThis());
-            if (tab != null) tab.setText(forecastLimit + forecastLimit > 1 ? " Days" : " Day");
+            if (tab != null) tab.setText(String.valueOf(forecastLimit) + (forecastLimit > 1 ? " Days" : " Day"));
         } catch (Exception e) {
             e.printStackTrace();
         }

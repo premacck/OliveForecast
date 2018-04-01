@@ -13,6 +13,27 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="AppTheme.SearchBar">
+        <item name="android:textAppearance">@style/CustomTextAppearance</item>
+    </style>
+
+    <style name="CustomTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:textColorPrimaryInverse">@android:color/white</item>
+        <item name="android:textColorSecondary">@color/colorSecondaryText</item>
+        <item name="android:textColorSecondaryInverse">@android:color/white</item>
+        <item name="android:textColorTertiary">@color/colorTertiaryText</item>
+        <item name="android:textColorTertiaryInverse">@android:color/white</item>
+        <item name="android:textColorHint">@color/colorTertiaryText</item>
+        <item name="android:textColorHintInverse">@color/colorTertiaryTextDark</item>
+        <item name="android:textColorHighlight">@color/colorSecondaryText</item>
+
+        <item name="colorControlNormal">?android:attr/textColorSecondary</item>
+        <item name="colorControlHighlight">@color/colorRippleDark</item>
+        <item name="colorButtonNormal">@color/colorSecondaryText</item>
+        <item name="colorSwitchThumbNormal">@color/material_grey400</item>
+    </style>
+
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="AppTheme.CustomTabLayout" parent="Widget.Design.TabLayout">
@@ -26,45 +47,42 @@
     </style>
 
     <style name="AppTheme.CustomTextViewBig">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/default_padding</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_30sp</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
     <style name="AppTheme.CustomTextViewDefault">
-        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">@dimen/default_padding</item>
+        <item name="android:layout_margin">@dimen/default_padding</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_20sp</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewListLarge">
+    <style name="AppTheme.CustomTextViewList">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">@dimen/default_padding</item>
-        <item name="android:paddingRight">@dimen/default_padding</item>
-        <item name="android:paddingTop">@dimen/mini_padding</item>
-        <item name="android:paddingBottom">@dimen/mini_padding</item>
-        <item name="android:gravity">start|left|center_vertical</item>
-        <item name="android:textSize">@dimen/text_14sp</item>
-        <item name="android:textColor">@color/colorSecondaryText</item>
+        <item name="android:layout_marginLeft">@dimen/default_padding</item>
+        <item name="android:layout_marginRight">@dimen/default_padding</item>
+        <item name="android:layout_marginTop">@dimen/mini_padding</item>
+        <item name="android:layout_marginBottom">@dimen/mini_padding</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewListDefault">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">@dimen/default_padding</item>
-        <item name="android:paddingRight">@dimen/default_padding</item>
-        <item name="android:paddingTop">@dimen/mini_padding</item>
-        <item name="android:paddingBottom">@dimen/mini_padding</item>
+    <style name="AppTheme.CustomTextViewList.CustomTextViewListLarge">
+        <item name="android:gravity">start|left|center_vertical</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+    </style>
+
+    <style name="AppTheme.CustomTextViewList.CustomTextViewListDefault">
         <item name="android:gravity">end|right|center_vertical</item>
         <item name="android:textSize">@dimen/text_16sp</item>
-        <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
     <style name="AppTheme.CustomCheckedTextView">
