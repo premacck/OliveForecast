@@ -46,9 +46,15 @@
         <item name="textAllCaps">false</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewBig">
+    <style name="AppTheme.CustomTextView">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="AppTheme.CustomTextView.Big">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/default_padding</item>
@@ -57,37 +63,31 @@
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewDefault">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="AppTheme.CustomTextView.Default">
         <item name="android:layout_margin">@dimen/default_padding</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:textSize">@dimen/text_20sp</item>
         <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewList">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="AppTheme.CustomTextView.List">
         <item name="android:layout_marginLeft">@dimen/default_padding</item>
         <item name="android:layout_marginRight">@dimen/default_padding</item>
         <item name="android:layout_marginTop">@dimen/mini_padding</item>
         <item name="android:layout_marginBottom">@dimen/mini_padding</item>
     </style>
 
-    <style name="AppTheme.CustomTextViewList.CustomTextViewListLarge">
-        <item name="android:gravity">start|left|center_vertical</item>
-        <item name="android:textSize">@dimen/text_14sp</item>
-    </style>
-
-    <style name="AppTheme.CustomTextViewList.CustomTextViewListDefault">
+    <style name="AppTheme.CustomTextView.List.Default">
         <item name="android:gravity">end|right|center_vertical</item>
         <item name="android:textSize">@dimen/text_16sp</item>
     </style>
 
-    <style name="AppTheme.CustomCheckedTextView">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
+    <style name="AppTheme.CustomTextView.List.Large">
+        <item name="android:gravity">start|left|center_vertical</item>
+        <item name="android:textSize">@dimen/text_14sp</item>
+    </style>
+
+    <style name="AppTheme.CustomTextView.Checked">
         <item name="android:paddingLeft">@dimen/default_padding</item>
         <item name="android:paddingRight">@dimen/default_padding</item>
         <item name="android:paddingTop">@dimen/half_padding</item>

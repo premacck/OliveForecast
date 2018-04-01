@@ -18,12 +18,12 @@
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_city_name"
                 android:minWidth="150dp"
-                style="@style/AppTheme.CustomTextViewBig"/>
+                style="@style/AppTheme.CustomTextView.Big"/>
 
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_date"
                 android:minWidth="200dp"
-                style="@style/AppTheme.CustomTextViewDefault"
+                style="@style/AppTheme.CustomTextView.Default"
                 android:paddingBottom="@dimen/half_padding"/>
 
             <include layout="@layout/separator"/>
@@ -66,22 +66,22 @@
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_wind_speed"
                 android:minWidth="200dp"
-                style="@style/AppTheme.CustomTextViewDefault"/>
+                style="@style/AppTheme.CustomTextView.Default"/>
 
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_wind_degree"
                 android:minWidth="150dp"
-                style="@style/AppTheme.CustomTextViewDefault"/>
+                style="@style/AppTheme.CustomTextView.Default"/>
 
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_humidity"
                 android:minWidth="150dp"
-                style="@style/AppTheme.CustomTextViewDefault"/>
+                style="@style/AppTheme.CustomTextView.Default"/>
 
             <com.prembros.oliveforecast.ui.customviews.CustomTextView
                 android:id="@+id/weather_condition"
                 android:minWidth="200dp"
-                style="@style/AppTheme.CustomTextViewDefault"/>
+                style="@style/AppTheme.CustomTextView.Default"/>
 
             <include layout="@layout/separator"/>
 

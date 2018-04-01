@@ -18,12 +18,12 @@
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_date"
             android:minWidth="180dp"
-            style="@style/AppTheme.CustomTextViewList.CustomTextViewListLarge"/>
+            style="@style/AppTheme.CustomTextView.List.Large"/>
 
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_condition"
             android:minWidth="100dp"
-            style="@style/AppTheme.CustomTextViewList.CustomTextViewListLarge"/>
+            style="@style/AppTheme.CustomTextView.List.Large"/>
 
     </LinearLayout>
 
@@ -50,12 +50,12 @@
             android:id="@+id/forecast_max"
             android:layout_marginBottom="@dimen/mini_padding"
             android:minWidth="50dp"
-            style="@style/AppTheme.CustomTextViewList.CustomTextViewListDefault"/>
+            style="@style/AppTheme.CustomTextView.List.Default"/>
 
         <com.prembros.oliveforecast.ui.customviews.CustomTextView
             android:id="@+id/forecast_min"
             android:minWidth="50dp"
-            style="@style/AppTheme.CustomTextViewList.CustomTextViewListDefault"/>
+            style="@style/AppTheme.CustomTextView.List.Default"/>
 
     </LinearLayout>
 

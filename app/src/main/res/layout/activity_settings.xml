@@ -69,14 +69,14 @@
 
         <com.prembros.oliveforecast.ui.customviews.CustomCheckedTextView
             android:id="@+id/metric"
-            style="@style/AppTheme.CustomCheckedTextView"
+            style="@style/AppTheme.CustomTextView.Checked"
             android:layout_weight="1"
             android:text="@string/metric"
             android:background="@drawable/bg_btn_white_curved_left" />
 
         <com.prembros.oliveforecast.ui.customviews.CustomCheckedTextView
             android:id="@+id/imperial"
-            style="@style/AppTheme.CustomCheckedTextView"
+            style="@style/AppTheme.CustomTextView.Checked"
             android:layout_weight="1"
             android:text="@string/imperial"
             android:background="@drawable/bg_btn_white_curved_right" />
